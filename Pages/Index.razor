@@ -34,12 +34,12 @@ Welcome to your new app.
                 color = Preferences.Default.Get("thecolor", "default");         // this line actually retrieves the value.
                 StateHasChanged();                                              // this line makes the screen update to reflect the new color.
             }
-        }
+        } 
     }
 
     private void handleRedClick()
     {
-        color = "red";
+        color = "red";   
         Preferences.Default.Set("theColor", color);                             // save red as the color
     }
 
