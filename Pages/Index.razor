@@ -1,0 +1,52 @@
+﻿@page "/"
+@*
+    This app demonstrates how we can save a value such as color using Preferences.Default
+    and recal that value back whenever the program is stopped and run again. This lets us
+    save session preferences and easily reload them so there is a consistency between 
+    sessions.
+*@
+
+<style>
+    body {
+        background-color : @color;
+    }
+
+</style>
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<div>
+    <button @onclick="handleRedClick">RED</button>
+    <button @onclick="handleGreenClick">GREEN</button>
+</div>
+
+@code
+{
+    string color = "red";
+
+    protected override void OnAfterRender(bool firstRender)                     // note that this method is automatically executed when the page
+    {                                                                           // is loaded.
+        if (firstRender)                                                        // only do this when the page first loads
+        {
+            if (Preferences.Default.ContainsKey("theColor"))                    // first check if we have actually saved the backcolor - first time through
+            {                                                                   // it wont have been saved.
+                color = Preferences.Default.Get("thecolor", "default");         // this line actually retrieves the value.
+                StateHasChanged();                                              // this line makes the screen update to reflect the new color.
+            }
+        }
+    }
+
+    private void handleRedClick()
+    {
+        color = "red";
+        Preferences.Default.Set("theColor", color);                             // save red as the color
+    }
+
+    private void handleGreenClick()
+    {
+        color = "green";
+        Preferences.Default.Set("theColor", color);                             // save green as the color
+    }
+
+}
